@@ -16,24 +16,39 @@ public class Test {
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("https://www.facebook.com/");
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-		
-		String defaultTitleString= "Facebook – log in or sign up";
-		
-		driver.findElement(By.id("email")).sendKeys("Example@email.com");	
-		driver.findElement(By.id("pass")).sendKeys("ExamplePassword");
+
+		String defaultTitleString = "Facebook – log in or sign up";
+		String wrongpassTitleString = "Log in to Facebook";
+		String loggedinTitleString = "Facebook";
+
+		driver.findElement(By.id("email")).sendKeys("TempMaile@gufum.com");
+		driver.findElement(By.id("pass")).sendKeys("Admin123@");
 		driver.findElement(By.name("login")).click();
 
-		
-		String newTitleString=driver.getTitle();  //facebook
-    
-		if(newTitleString!=defaultTitleString) {
-			System.out.print("Homepage Loaded");
-		}	
-		else {
+		try {
+			Thread.sleep(6000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String newTitleString = driver.getTitle();
+		if (newTitleString.equals(defaultTitleString)) {
 			System.out.println("Log in Failed : Homepage not loaded");
 
+		} else if (newTitleString.equals(wrongpassTitleString)) {
+			System.out.print("Wrong Pass Word or failed to Log in");
+		} else if (newTitleString.equals(loggedinTitleString)) {
+			System.out.print("Loggedin  SucessFull");
+		} else {
+			System.out.print("None Of the Title Maching, Maybe Its logged in");
 		}
-		
+
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
